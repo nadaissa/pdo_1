@@ -11,22 +11,26 @@ if($statement === false){
     die("Erreur SQL");
 }
 
-// // On veut afficher notre résultat via un tableau associatif (PDO::FETCH_ASSOC)
-$friendsArray = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-foreach($friendsArray as $friend) {
-    echo $friend['firstname'] . ' ' . $friend['lastname'];
-}
-
-// On veut afficher notre résultat via un tableau associatif (PDO::FETCH_OBJ)
+// // On veut afficher notre résultat via un tableau objet (PDO::FETCH_OBJ)
 $friendsObject = $statement->fetchAll(PDO::FETCH_OBJ);
 
-foreach($friendsObject as $friend) {
-    echo $friend->firstname . ' ' . $friend->lastname;
-}
-
-
-var_dump($friendsArray);
-
-
 ?>
+
+<ul>
+    <?php foreach($friendsObject as $friend):?>
+        <li>
+            <span><?= $friend->firstname ?></span>
+            <span><?= $friend->lastname ?></span>
+        </li>
+    <?php endforeach?>
+</ul>
+
+
+
+<form action="fill.php" method="post">
+  <label for="firstname">First name:</label><br>
+  <input type="text" id="firstname" name="firstname"><br>
+  <label for="lastname">Last name:</label><br>
+  <input type="text" id="lastname" name="lastname">
+  <button type="submit">Envoi</button>
+</form>
